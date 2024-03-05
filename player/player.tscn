@@ -1,0 +1,263 @@
+[gd_scene load_steps=24 format=3 uid="uid://tjmo67bv6h05"]
+
+[ext_resource type="Texture2D" uid="uid://dfkfac8j8aq8c" path="res://player/playerSprite.png" id="1_3gkep"]
+[ext_resource type="Script" path="res://player/player.gd" id="1_pyt0g"]
+[ext_resource type="Texture2D" uid="uid://cub4eq0q77vq0" path="res://assets/sprites/reloadAnimation/reloadAnimation.png" id="2_g2ood"]
+[ext_resource type="Texture2D" uid="uid://bla10ihkw5f2x" path="res://player/gun.png" id="3_i8w4s"]
+[ext_resource type="Texture2D" uid="uid://dgg3lhcttpipy" path="res://player/bullet/bullet_casing.png" id="5_sgq34"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1hdo"]
+atlas = ExtResource("2_g2ood")
+region = Rect2(0, 0, 7, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dv5vm"]
+atlas = ExtResource("2_g2ood")
+region = Rect2(0, 1, 7, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b56y0"]
+atlas = ExtResource("2_g2ood")
+region = Rect2(0, 2, 7, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76cyh"]
+atlas = ExtResource("2_g2ood")
+region = Rect2(0, 3, 7, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xkfo5"]
+atlas = ExtResource("2_g2ood")
+region = Rect2(0, 4, 7, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m6ls8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1hdo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dv5vm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b56y0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76cyh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xkfo5")
+}],
+"loop": false,
+"name": &"reload",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_axwkq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ReloadAnimation:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"reload"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ReloadAnimation:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_yccnl"]
+resource_name = "reload"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ReloadAnimation:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"reload"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ReloadAnimation:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"reload_finish"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_coeng"]
+_data = {
+"RESET": SubResource("Animation_axwkq"),
+"reload": SubResource("Animation_yccnl")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aanno"]
+size = Vector2(8, 8)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gcmvf"]
+font_size = 35
+
+[sub_resource type="Gradient" id="Gradient_swa8u"]
+offsets = PackedFloat32Array(0.709677, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_v5jr6"]
+gradient = SubResource("Gradient_swa8u")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jyky4"]
+particle_flag_disable_z = true
+angle_max = 360.0
+direction = Vector3(-1, -1, 0)
+spread = 15.0
+initial_velocity_min = 70.0
+initial_velocity_max = 70.0
+angular_velocity_min = -500.0
+angular_velocity_max = 500.0
+gravity = Vector3(0, 230, 0)
+scale_min = 0.65
+scale_max = 0.65
+color = Color(1, 0.968627, 0.701961, 1)
+color_ramp = SubResource("GradientTexture1D_v5jr6")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e6jmf"]
+size = Vector2(8, 8)
+
+[sub_resource type="Gradient" id="Gradient_7xplh"]
+offsets = PackedFloat32Array(0.830645, 1)
+colors = PackedColorArray(0.984314, 0.94902, 0.211765, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_66o2d"]
+gradient = SubResource("Gradient_7xplh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_21ncf"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 5.0
+angle_max = 360.0
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 50, 0)
+damping_min = 20.0
+damping_max = 40.0
+color = Color(0.984314, 0.94902, 0.211765, 1)
+color_ramp = SubResource("GradientTexture1D_66o2d")
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_pyt0g")
+speed = 200
+bullet_capacity = 3
+
+[node name="ReloadAnimation" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(0, -6)
+sprite_frames = SubResource("SpriteFrames_m6ls8")
+animation = &"reload"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_coeng")
+}
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_3gkep")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_aanno")
+
+[node name="Camera" type="Camera2D" parent="."]
+scale = Vector2(0.25, 0.25)
+zoom = Vector2(4, 4)
+position_smoothing_enabled = true
+position_smoothing_speed = 30.0
+
+[node name="Speed" type="Label" parent="Camera"]
+offset_left = -544.0
+offset_top = -288.0
+offset_right = -447.0
+offset_bottom = -219.0
+text = "text
+"
+label_settings = SubResource("LabelSettings_gcmvf")
+
+[node name="Gun" type="Sprite2D" parent="."]
+position = Vector2(9.37916e-13, 0)
+scale = Vector2(0.55, 0.55)
+texture = ExtResource("3_i8w4s")
+offset = Vector2(10, 0)
+
+[node name="ReloadEffect" type="GPUParticles2D" parent="Gun"]
+position = Vector2(-1.7053e-12, 0)
+scale = Vector2(1.81818, 1.81818)
+emitting = false
+amount = 3
+process_material = SubResource("ParticleProcessMaterial_jyky4")
+texture = ExtResource("5_sgq34")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.73
+
+[node name="BufferJumpTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="CoyoteTimeTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="CanShootTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="Detector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 12
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+shape = SubResource("RectangleShape2D_e6jmf")
+
+[node name="DeathEffect" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 20
+process_material = SubResource("ParticleProcessMaterial_21ncf")
+lifetime = 0.7
+one_shot = true
+explosiveness = 0.82
+
+[connection signal="timeout" from="BufferJumpTimer" to="." method="_on_buffer_jump_timer_timeout"]
+[connection signal="timeout" from="CoyoteTimeTimer" to="." method="_on_coyote_time_timer_timeout"]
+[connection signal="timeout" from="CanShootTimer" to="." method="_on_can_shoot_timer_timeout"]
+[connection signal="area_entered" from="Detector" to="." method="area_interact"]
+[connection signal="body_entered" from="Detector" to="." method="interact"]

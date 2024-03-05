@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dktr2rmnyybd3"]
+
+[ext_resource type="Script" path="res://zoom_changer/zoom_changer.gd" id="1_a1vim"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_klh7f"]
+
+[node name="ZoomChanger" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_a1vim")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_klh7f")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
