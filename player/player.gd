@@ -1,11 +1,7 @@
 extends CharacterBody2D
 
 #region properties
-@export var speed = 150
-@export var base_acceleration = 30
-@export var jump_power = -300
 @export var bullet_capacity := 2
-@export var gravity = 800
 @export var zoom := 4.0
 @onready var sprite = $Sprite
 @onready var gun = $Gun
@@ -13,12 +9,12 @@ extends CharacterBody2D
 @onready var coyote_time_timer = $CoyoteTimeTimer
 @onready var camera : Camera2D = $Camera
 @onready var reload_effect = $Gun/ReloadEffect
+@onready var movement_manager = $MovementManager
 
 var jumping = false
 var coyote = false
 var last_floor : bool
 var buffered_jump = false
-var acceleration
 var ammo
 var reloading = false
 var can_shoot = true
@@ -31,7 +27,6 @@ var bullet_scene = preload("res://player/bullet/bullet.tscn")
 func _ready():
 	camera.zoom = Vector2(zoom, zoom)
 	camera.scale = Vector2(1.0/zoom, 1.0/zoom)
-	acceleration = base_acceleration
 	ammo = bullet_capacity
 	if respawn_point != null:
 		respawn_point.active(true)
@@ -59,35 +54,27 @@ func _input(event):
 	if Input.is_action_just_pressed("reload") and not reloading and ammo != bullet_capacity:
 		reload()
 
-func _physics_process(delta):
+func _physics_process(_delta):
+	if dead:
+		return
 	var calculated_speed = (int)((pow(pow(velocity.x, 2) + pow(velocity.y, 2), 0.5)) / 20.0)
-	$Camera/Speed.text = (str)(calculated_speed) + "km/h"
 	if calculated_speed > 45:
 		$Camera/Speed.label_settings.font_color = Color(0.25, 0, 0.9, 1)
 	else:
 		$Camera/Speed.label_settings.font_color = Color(1, 1, 1, 1)
-	if dead:
-		return
+	$Camera/Speed.text = (str)(calculated_speed) + "km/h"
 	if Input.is_action_just_pressed("jump") and (is_on_floor() or coyote):
-		jump()
+		movement_manager.jump()
 	if not is_on_floor() and last_floor and not jumping:
 		coyote = true
 		coyote_time_timer.start()
-	if buffered_jump and is_on_floor():
+	if buffered_jump and is_on_floor() and Input.is_action_pressed("jump"):
 		buffered_jump = false
-		jump()
-	if not is_on_floor():
-		velocity.y += gravity * delta
+		movement_manager.jump()
 	if velocity.y >= 0 and is_on_floor():
 		jumping = false
-	var direction = Input.get_axis("move_left", "move_right")
-	if direction:
-		velocity.x = move_toward(velocity.x, speed * direction, base_acceleration)
-	else:
-		velocity.x = move_toward(velocity.x, 0, acceleration)
+	movement_manager.set_move_direction(Input.get_axis("move_left", "move_right"))
 	last_floor = is_on_floor()
-	if is_on_floor():
-		acceleration = base_acceleration
 	move_and_slide()
 
 func reload_finish():
@@ -102,6 +89,7 @@ func die():
 	$ReloadAnimation.visible = false
 	$DeathEffect.restart()
 	$DeathEffect.emitting = true
+	$Camera/Speed.text = "dead"
 
 func respawn(location : Vector2):
 	velocity = Vector2.ZERO
@@ -131,10 +119,6 @@ func reload():
 	$AnimationPlayer.play("reload")
 	reload_effect.amount = bullet_capacity - ammo
 	reload_effect.emitting = true
-
-func jump():
-	velocity.y = jump_power
-	jumping = true
 
 func _on_can_shoot_timer_timeout():
 	can_shoot = true

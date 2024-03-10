@@ -73,5 +73,5 @@ func _on_knockback_body_entered(body):
 	if distance > 35:
 		knockback_velocity /= 1.5
 	body.velocity += knockback_velocity
-	body.acceleration /= 20
+	body.movement_manager.acceleration /= 20
 	knockback_shape.set_deferred("disabled", true)

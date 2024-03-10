@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://dgnxy1add5uf5"]
+
+[ext_resource type="Script" path="res://enemy/enemy.gd" id="1_unjuo"]
+[ext_resource type="Texture2D" uid="uid://c4wwdega053w5" path="res://enemy/assets/enemy.png" id="2_8loyn"]
+[ext_resource type="PackedScene" uid="uid://bfruksbebf300" path="res://managers/movement_manager.tscn" id="3_hajfh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uppp6"]
+atlas = ExtResource("2_8loyn")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b61gr"]
+atlas = ExtResource("2_8loyn")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7t1d3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uppp6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b61gr")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gr2qo"]
+size = Vector2(8, 8)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 16
+collision_mask = 3
+script = ExtResource("1_unjuo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7t1d3")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gr2qo")
+
+[node name="LeftCast" type="RayCast2D" parent="."]
+enabled = false
+target_position = Vector2(-15, 0)
+
+[node name="RightCast" type="RayCast2D" parent="."]
+enabled = false
+target_position = Vector2(15, 0)
+
+[node name="MovementManager" parent="." instance=ExtResource("3_hajfh")]
+speed = 50
+base_acceleration = 15
