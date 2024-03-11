@@ -65,13 +65,16 @@ func disable_knockback():
 	knockback_shape.disabled = true
 
 func _on_knockback_body_entered(body):
-	var knockback_angle = fmod(rotation + PI, 360)
-	var distance = get_collision_point().distance_to(body.position)
-	var knockback_velocity := Vector2.ZERO
-	knockback_velocity.y = sin(knockback_angle) * knockback_strenght
-	knockback_velocity.x = cos(knockback_angle) * knockback_strenght
-	if distance > 35:
-		knockback_velocity /= 1.5
-	body.velocity += knockback_velocity
-	body.movement_manager.acceleration /= 20
-	knockback_shape.set_deferred("disabled", true)
+	if body.is_in_group("Player"):
+		var knockback_angle = fmod(rotation + PI, 360)
+		var distance = get_collision_point().distance_to(body.position)
+		var knockback_velocity := Vector2.ZERO
+		knockback_velocity.y = sin(knockback_angle) * knockback_strenght
+		knockback_velocity.x = cos(knockback_angle) * knockback_strenght
+		if distance > 35:
+			knockback_velocity /= 1.5
+		body.velocity += knockback_velocity
+		body.movement_manager.acceleration /= 20
+		knockback_shape.set_deferred("disabled", true)
+	elif body.global_position.distance_to(knockback.global_position) < 16.0:
+			body.die()

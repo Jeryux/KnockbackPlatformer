@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dgnxy1add5uf5"]
+[gd_scene load_steps=12 format=3 uid="uid://dgnxy1add5uf5"]
 
 [ext_resource type="Script" path="res://enemy/enemy.gd" id="1_unjuo"]
 [ext_resource type="Texture2D" uid="uid://c4wwdega053w5" path="res://enemy/assets/enemy.png" id="2_8loyn"]
@@ -29,9 +29,33 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gr2qo"]
 size = Vector2(8, 8)
 
-[node name="Enemy" type="CharacterBody2D"]
+[sub_resource type="Gradient" id="Gradient_fcofa"]
+offsets = PackedFloat32Array(0.830645, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_66o2d"]
+gradient = SubResource("Gradient_fcofa")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b8xtx"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 5.0
+angle_max = 360.0
+spread = 180.0
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 50, 0)
+damping_min = 20.0
+damping_max = 40.0
+color = Color(0.745098, 0.537255, 0.827451, 1)
+color_ramp = SubResource("GradientTexture1D_66o2d")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6g7ug"]
+size = Vector2(8, 8)
+
+[node name="Enemy" type="CharacterBody2D" groups=["Creature"]]
 collision_layer = 16
-collision_mask = 3
+collision_mask = 17
 script = ExtResource("1_unjuo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -40,16 +64,43 @@ animation = &"walk"
 autoplay = "walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_gr2qo")
 
 [node name="LeftCast" type="RayCast2D" parent="."]
 enabled = false
 target_position = Vector2(-15, 0)
+collision_mask = 19
 
 [node name="RightCast" type="RayCast2D" parent="."]
 enabled = false
 target_position = Vector2(15, 0)
+collision_mask = 19
 
-[node name="MovementManager" parent="." instance=ExtResource("3_hajfh")]
+[node name="MovementManager" parent="." groups=["Creature"] instance=ExtResource("3_hajfh")]
 speed = 50
 base_acceleration = 15
+gravity = 230
+
+[node name="DeathEffect" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 7
+process_material = SubResource("ParticleProcessMaterial_b8xtx")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.82
+
+[node name="Detector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector"]
+visible = false
+shape = SubResource("RectangleShape2D_6g7ug")
+
+[node name="RemoveTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="finished" from="DeathEffect" to="." method="remove"]
+[connection signal="body_entered" from="Detector" to="." method="interact"]
+[connection signal="timeout" from="RemoveTimer" to="." method="remove"]

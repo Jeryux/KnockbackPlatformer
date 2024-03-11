@@ -10,6 +10,7 @@ extends CharacterBody2D
 @onready var camera : Camera2D = $Camera
 @onready var reload_effect = $Gun/ReloadEffect
 @onready var movement_manager = $MovementManager
+@onready var collision = $CollisionShape2D
 
 var jumping = false
 var coyote = false
@@ -83,24 +84,29 @@ func reload_finish():
 	$ReloadAnimation.visible = false
 
 func die():
+	if dead:
+		return
 	dead = true
 	sprite.visible = false
 	gun.visible = false
+	collision.set_deferred("disabled", true)
 	$ReloadAnimation.visible = false
 	$DeathEffect.restart()
 	$DeathEffect.emitting = true
 	$Camera/Speed.text = "dead"
 
 func respawn(location : Vector2):
+	collision.set_deferred("disabled", false)
+	can_shoot = true
 	velocity = Vector2.ZERO
 	ammo = bullet_capacity
 	global_position = location
-	dead = false
 	sprite.visible = true
 	gun.visible = true
 	$DeathEffect.emitting = false
 	camera.zoom = respawn_point.camera_zoom
 	camera.scale = Vector2(1.0/respawn_point.camera_zoom.x, 1.0/respawn_point.camera_zoom.x)
+	$InvincibleTimer.start()
 
 func shoot():
 	var bullet_instance : Bullet = bullet_scene.instantiate()
@@ -140,3 +146,7 @@ func area_interact(area):
 		respawn_point = area
 		respawn_point.active(true)
 		respawn_point.camera_zoom = camera.zoom
+
+
+func make_vulnerable():
+	dead = false

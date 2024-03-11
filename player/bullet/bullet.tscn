@@ -66,6 +66,7 @@ radius = 60.0
 
 [node name="Bullet" type="RayCast2D"]
 target_position = Vector2(2000, 0)
+collision_mask = 17
 script = ExtResource("1_g27kv")
 flash_color = Color(0.376471, 0, 0.478431, 1)
 knockback_strenght = 350
@@ -115,7 +116,7 @@ wait_time = 0.05
 
 [node name="Knockback" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 18
 
 [node name="KnockbackShape" type="CollisionShape2D" parent="Knockback"]
 shape = SubResource("CircleShape2D_so1m3")
