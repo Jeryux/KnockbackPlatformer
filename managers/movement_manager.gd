@@ -17,6 +17,7 @@ func _ready():
 func set_move_direction(direction : int):
 	move_dir = direction
 
+
 func jump():
 	character.velocity.y = jump_power
 	character.jumping = true

@@ -7,6 +7,7 @@
 radius = 4.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rg622"]
+size = Vector2(8, 8)
 
 [sub_resource type="Curve" id="Curve_bx4l2"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.703297), -0.770921, 0.0, 0, 0]
@@ -52,11 +53,10 @@ modulate = Color(1, 0.129412, 0.129412, 1)
 texture = ExtResource("1_c0ibp")
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 23
+collision_layer = 32
+collision_mask = 55
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 shape = SubResource("RectangleShape2D_rg622")
 
 [node name="Impact" type="GPUParticles2D" parent="."]
@@ -70,5 +70,6 @@ explosiveness = 1.0
 [node name="DeleteTimer" type="Timer" parent="."]
 wait_time = 0.5
 
+[connection signal="area_entered" from="Area2D" to="." method="remove"]
 [connection signal="body_entered" from="Area2D" to="." method="remove"]
 [connection signal="timeout" from="DeleteTimer" to="." method="delete"]

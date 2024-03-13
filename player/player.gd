@@ -11,6 +11,7 @@ extends CharacterBody2D
 @onready var reload_effect = $Gun/ReloadEffect
 @onready var movement_manager = $MovementManager
 @onready var collision = $CollisionShape2D
+@onready var pause_menu = $Camera/PauseMenu
 
 var jumping = false
 var coyote = false
@@ -43,6 +44,8 @@ func _input(event):
 		if Input.is_action_just_pressed("reload"):
 			respawn(respawn_point.give_respawn_pos())
 		return
+	if pause_menu.paused:
+		return
 	if Input.is_action_just_pressed("jump"):
 		buffered_jump = true
 		buffer_jump_timer.start()
@@ -56,7 +59,7 @@ func _input(event):
 		reload()
 
 func _physics_process(_delta):
-	if dead:
+	if dead or pause_menu.paused:
 		return
 	var calculated_speed = (int)((pow(pow(velocity.x, 2) + pow(velocity.y, 2), 0.5)) / 20.0)
 	if calculated_speed > 45:

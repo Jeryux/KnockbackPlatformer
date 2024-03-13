@@ -1,6 +1,5 @@
-[gd_scene load_steps=11 format=3 uid="uid://cuaah256f8xpq"]
+[gd_scene load_steps=10 format=3 uid="uid://cuaah256f8xpq"]
 
-[ext_resource type="Script" path="res://world.gd" id="1_0yt0r"]
 [ext_resource type="Texture2D" uid="uid://drw3hx85l6q3i" path="res://assets/Tileset.png" id="1_uft0p"]
 [ext_resource type="PackedScene" uid="uid://tjmo67bv6h05" path="res://player/player.tscn" id="2_vrqaf"]
 [ext_resource type="PackedScene" uid="uid://dktr2rmnyybd3" path="res://zoom_changer/zoom_changer.tscn" id="3_bow2r"]
@@ -130,7 +129,6 @@ physics_layer_1/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_wj5eu")
 
 [node name="World" type="Node"]
-script = ExtResource("1_0yt0r")
 
 [node name="Map" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_1fv1x")
@@ -241,6 +239,12 @@ spawn_interval = 2.5
 position = Vector2(1, -71)
 entity = ExtResource("7_n4mpl")
 spawn_interval = 1.2
+
+[node name="Spawner3" parent="Map" instance=ExtResource("5_be12t")]
+position = Vector2(-275, 123)
+entity = ExtResource("7_n4mpl")
+physics_direction = Vector2(0, -18000)
+spawn_interval = 1.4
 
 [node name="Player" parent="." node_paths=PackedStringArray("respawn_point") instance=ExtResource("2_vrqaf")]
 position = Vector2(-184, 68)

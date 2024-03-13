@@ -1,9 +1,10 @@
-[gd_scene load_steps=25 format=3 uid="uid://tjmo67bv6h05"]
+[gd_scene load_steps=26 format=3 uid="uid://tjmo67bv6h05"]
 
 [ext_resource type="Texture2D" uid="uid://dfkfac8j8aq8c" path="res://player/playerSprite.png" id="1_3gkep"]
 [ext_resource type="Script" path="res://player/player.gd" id="1_pyt0g"]
 [ext_resource type="Texture2D" uid="uid://cub4eq0q77vq0" path="res://assets/sprites/reloadAnimation/reloadAnimation.png" id="2_g2ood"]
 [ext_resource type="Texture2D" uid="uid://bla10ihkw5f2x" path="res://player/gun.png" id="3_i8w4s"]
+[ext_resource type="PackedScene" uid="uid://u2fhn31c3wlv" path="res://UIstuff/pause_menu.tscn" id="4_dfl8s"]
 [ext_resource type="Texture2D" uid="uid://dgg3lhcttpipy" path="res://player/bullet/bullet_casing.png" id="5_sgq34"]
 [ext_resource type="PackedScene" uid="uid://bfruksbebf300" path="res://managers/movement_manager.tscn" id="6_4ntdt"]
 
@@ -212,6 +213,9 @@ offset_bottom = -219.0
 text = "text
 "
 label_settings = SubResource("LabelSettings_gcmvf")
+
+[node name="PauseMenu" parent="Camera" instance=ExtResource("4_dfl8s")]
+visible = false
 
 [node name="Gun" type="Sprite2D" parent="."]
 position = Vector2(9.37916e-13, 0)
