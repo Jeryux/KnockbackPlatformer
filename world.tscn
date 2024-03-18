@@ -165,7 +165,7 @@ scale = Vector2(4, 1)
 zoom = 3.0
 
 [node name="ZoomChanger2" parent="Map/ZoomChangerPair" instance=ExtResource("3_bow2r")]
-position = Vector2(-5, -87)
+position = Vector2(-5, -14)
 scale = Vector2(4, 1)
 zoom = 4.0
 
@@ -247,5 +247,5 @@ physics_direction = Vector2(0, -18000)
 spawn_interval = 1.4
 
 [node name="Player" parent="." node_paths=PackedStringArray("respawn_point") instance=ExtResource("2_vrqaf")]
-position = Vector2(-184, 68)
+position = Vector2(493, -174)
 respawn_point = NodePath("../Map/RespawnSpot")

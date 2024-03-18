@@ -34,6 +34,25 @@ func _ready():
 		respawn_point.active(true)
 		respawn_point.camera_zoom = camera.zoom
 
+var tween : Tween
+var tween2 : Tween
+
+func change_zoom(duration, cam_zoom):
+	if cam_zoom == camera.zoom.x:
+		return
+	if tween != null and tween2 != null:
+		tween.kill()
+		tween2.kill()
+	tween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD)
+	tween.stop()
+	tween.tween_method(camera.set_zoom, camera.get_zoom(), Vector2(cam_zoom, cam_zoom), duration)
+	tween2 = get_tree().create_tween().set_trans(Tween.TRANS_QUAD)
+	tween2.stop()
+	var altered_duration = duration * (0.85 if camera.get_scale().x > 1/cam_zoom else 1.25)
+	tween2.tween_method(camera.set_scale, camera.get_scale(), Vector2(1/cam_zoom, 1/cam_zoom), altered_duration)
+	tween.play()
+	tween2.play()
+
 func _input(event):
 	if Input.is_action_just_pressed("fullscreen"):
 		if DisplayServer.window_get_mode() != DisplayServer.WINDOW_MODE_FULLSCREEN:
