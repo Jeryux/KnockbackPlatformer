@@ -7,7 +7,7 @@
 radius = 4.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rg622"]
-size = Vector2(8, 8)
+size = Vector2(6, 6)
 
 [sub_resource type="Curve" id="Curve_bx4l2"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.703297), -0.770921, 0.0, 0, 0]
@@ -41,7 +41,7 @@ alpha_curve = SubResource("CurveTexture_oix51")
 [node name="LavaDroplet" type="RigidBody2D"]
 collision_layer = 0
 collision_mask = 0
-gravity_scale = 0.25
+gravity_scale = 0.0
 script = ExtResource("1_0g66r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -55,6 +55,7 @@ texture = ExtResource("1_c0ibp")
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 32
 collision_mask = 55
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_rg622")

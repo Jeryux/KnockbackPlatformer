@@ -80,7 +80,7 @@ func _input(event):
 func _physics_process(_delta):
 	if dead or pause_menu.paused:
 		return
-	var calculated_speed = (int)((pow(pow(velocity.x, 2) + pow(velocity.y, 2), 0.5)) / 20.0)
+	var calculated_speed = (int)((pow(pow(get_real_velocity().x, 2) + pow(get_real_velocity().y, 2), 0.5)) / 20.0)
 	if calculated_speed > 45:
 		$Camera/Speed.label_settings.font_color = Color(0.25, 0, 0.9, 1)
 	else:
@@ -115,7 +115,7 @@ func die():
 	$ReloadAnimation.visible = false
 	$DeathEffect.restart()
 	$DeathEffect.emitting = true
-	$Camera/Speed.text = "dead"
+	$Camera/Speed.text = "press 'r'"
 
 func respawn(location : Vector2):
 	collision.set_deferred("disabled", false)

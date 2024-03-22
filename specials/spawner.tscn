@@ -1,11 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://1nof13250a4a"]
+[gd_scene load_steps=5 format=3 uid="uid://1nof13250a4a"]
 
 [ext_resource type="Script" path="res://specials/spawner.gd" id="1_gnmh1"]
+[ext_resource type="Texture2D" uid="uid://cto2m44tix58r" path="res://player/bullet/particle.png" id="2_rpup6"]
+[ext_resource type="Shader" path="res://specials/mask.gdshader" id="3_m2bjw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uut1c"]
+shader = ExtResource("3_m2bjw")
 
 [node name="Spawner" type="Node2D"]
 script = ExtResource("1_gnmh1")
 
 [node name="SpawnTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="mask" type="Sprite2D" parent="BackBufferCopy"]
+material = SubResource("ShaderMaterial_uut1c")
+scale = Vector2(2, 2)
+texture = ExtResource("2_rpup6")
 
 [connection signal="timeout" from="SpawnTimer" to="." method="spawn"]

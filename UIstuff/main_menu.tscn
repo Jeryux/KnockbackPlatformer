@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b0uaveymlkefn"]
+[gd_scene load_steps=3 format=3 uid="uid://b0uaveymlkefn"]
 
 [ext_resource type="Script" path="res://UIstuff/main_menu.gd" id="1_seig1"]
+[ext_resource type="PackedScene" uid="uid://dwen658drnbry" path="res://UIstuff/select_level.tscn" id="2_mxmkh"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -27,21 +28,54 @@ offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="MainControls" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Play" type="Button" parent="MarginContainer/MainControls"]
 custom_minimum_size = Vector2(160, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "PLAY"
 
-[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="MarginContainer/MainControls"]
 custom_minimum_size = Vector2(160, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "QUIT"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[node name="LevelSelect" type="VBoxContainer" parent="MarginContainer"]
+visible = false
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/LevelSelect"]
+layout_mode = 2
+theme_override_constants/separation = 200
+alignment = 1
+
+[node name="SelectLevel" parent="MarginContainer/LevelSelect/HBoxContainer" instance=ExtResource("2_mxmkh")]
+layout_mode = 2
+level_name = "Level 1"
+level_scene_path = "res://levels/level_1.tscn"
+
+[node name="SelectLevel2" parent="MarginContainer/LevelSelect/HBoxContainer" instance=ExtResource("2_mxmkh")]
+layout_mode = 2
+level_name = "Level 2"
+level_scene_path = "res://levels/level_2.tscn"
+
+[node name="SelectLevel3" parent="MarginContainer/LevelSelect/HBoxContainer" instance=ExtResource("2_mxmkh")]
+layout_mode = 2
+level_name = "Level 3"
+
+[node name="Button" type="Button" parent="MarginContainer/LevelSelect"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 45
+text = "BACK"
+
+[connection signal="pressed" from="MarginContainer/MainControls/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/MainControls/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="MarginContainer/LevelSelect/Button" to="." method="go_back"]
