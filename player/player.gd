@@ -118,14 +118,16 @@ func die():
 	$Camera/Speed.text = "press 'r'"
 
 func respawn(location : Vector2):
+	global_position = location
 	collision.set_deferred("disabled", false)
 	can_shoot = true
 	velocity = Vector2.ZERO
 	ammo = bullet_capacity
-	global_position = location
 	sprite.visible = true
 	gun.visible = true
 	$DeathEffect.emitting = false
+	tween.stop()
+	tween2.stop()
 	camera.zoom = respawn_point.camera_zoom
 	camera.scale = Vector2(1.0/respawn_point.camera_zoom.x, 1.0/respawn_point.camera_zoom.x)
 	$InvincibleTimer.start()

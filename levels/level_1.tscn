@@ -37,7 +37,7 @@ spawn_interval = 1.5
 position = Vector2(944, -264)
 entity = ExtResource("4_uk6uv")
 physics_direction = Vector2(10000, 0)
-spawn_interval = 0.8
+spawn_interval = 1.6
 horizontal_shoot = true
 
 [node name="ZoomChangerPair" type="Node2D" parent="TileMap"]
