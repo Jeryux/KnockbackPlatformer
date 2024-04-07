@@ -21,6 +21,7 @@ var ammo
 var reloading = false
 var can_shoot = true
 var dead = false
+var camera_shift = 0.15
 
 var bullet_scene = preload("res://player/bullet/bullet.tscn")
 @export var respawn_point : Node
@@ -76,6 +77,14 @@ func _input(event):
 		shoot()
 	if Input.is_action_just_pressed("reload") and not reloading and ammo != bullet_capacity:
 		reload()
+	if Input.is_action_pressed("control"):
+		var viewport_size = Vector2(get_viewport().get_visible_rect().size) / Vector2(2,2)
+		if get_viewport().get_mouse_position().x > 0 or get_viewport().get_mouse_position().x < viewport_size.x * 2:
+			camera.position.x = (get_viewport().get_mouse_position().x - viewport_size.x) * camera_shift
+		if get_viewport().get_mouse_position().y > 0 or get_viewport().get_mouse_position().y < viewport_size.y * 2:
+			camera.position.y = (get_viewport().get_mouse_position().y - viewport_size.y) * camera_shift
+	elif Input.is_action_just_released("control"):
+		camera.set_position(Vector2(0,0))
 
 func _physics_process(_delta):
 	if dead or pause_menu.paused:
@@ -126,8 +135,9 @@ func respawn(location : Vector2):
 	sprite.visible = true
 	gun.visible = true
 	$DeathEffect.emitting = false
-	tween.stop()
-	tween2.stop()
+	if tween != null and tween2 != null:
+		tween.stop()
+		tween2.stop()
 	camera.zoom = respawn_point.camera_zoom
 	camera.scale = Vector2(1.0/respawn_point.camera_zoom.x, 1.0/respawn_point.camera_zoom.x)
 	$InvincibleTimer.start()

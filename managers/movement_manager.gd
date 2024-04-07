@@ -21,11 +21,13 @@ func set_move_direction(direction : int):
 func jump():
 	character.velocity.y = jump_power
 	character.jumping = true
+	if abs(character.velocity.x) > 250:
+		acceleration /= 10
 
 func _process(delta):
 	if not character.is_on_floor():
 		character.velocity.y += gravity * delta
-	if move_dir:
+	if move_dir and (move_dir == 1 and character.velocity.x < 200) or (move_dir == -1 and character.velocity.x > -200):
 		character.velocity.x = move_toward(character.velocity.x, speed * move_dir, base_acceleration)
 	else:
 		character.velocity.x = move_toward(character.velocity.x, 0, acceleration)
