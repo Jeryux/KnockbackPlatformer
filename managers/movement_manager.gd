@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var speed = 200
+@export var speed = 185
 @export var base_acceleration = 30
 @export var jump_power = -300
 @export var gravity = 800
