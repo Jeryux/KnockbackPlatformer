@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://u2fhn31c3wlv"]
+[gd_scene load_steps=5 format=3 uid="uid://u2fhn31c3wlv"]
 
 [ext_resource type="Script" path="res://UIstuff/pause_menu.gd" id="1_myai4"]
 [ext_resource type="Shader" path="res://UIstuff/pause_menu.gdshader" id="2_ar5lh"]
@@ -6,6 +6,9 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dhaoy"]
 shader = ExtResource("2_ar5lh")
 shader_parameter/amount = 2.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_fwbxh"]
+font_size = 40
 
 [node name="PauseMenu" type="Control"]
 layout_mode = 3
@@ -52,21 +55,55 @@ offset_bottom = 115.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Anchor/MarginContainer"]
+[node name="PauseMenu" type="VBoxContainer" parent="Anchor/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Resume" type="Button" parent="Anchor/MarginContainer/VBoxContainer"]
+[node name="Resume" type="Button" parent="Anchor/MarginContainer/PauseMenu"]
 custom_minimum_size = Vector2(250, 100)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 45
 text = "Resume"
 
-[node name="Quit" type="Button" parent="Anchor/MarginContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="Anchor/MarginContainer/PauseMenu"]
 custom_minimum_size = Vector2(250, 100)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 45
 text = "Quit"
 
-[connection signal="pressed" from="Anchor/MarginContainer/VBoxContainer/Resume" to="." method="unpause"]
-[connection signal="pressed" from="Anchor/MarginContainer/VBoxContainer/Quit" to="." method="quit"]
+[node name="LevelBeat" type="VBoxContainer" parent="Anchor/MarginContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Text" type="Label" parent="Anchor/MarginContainer/LevelBeat"]
+layout_mode = 2
+text = "LEVEL BEATEN"
+label_settings = SubResource("LabelSettings_fwbxh")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Anchor/MarginContainer/LevelBeat"]
+layout_mode = 2
+theme_override_constants/separation = 45
+
+[node name="Menu" type="Button" parent="Anchor/MarginContainer/LevelBeat/HBoxContainer"]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 45
+text = "Menu
+"
+
+[node name="Next" type="Button" parent="Anchor/MarginContainer/LevelBeat/HBoxContainer"]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 45
+text = "Next"
+
+[connection signal="pressed" from="Anchor/MarginContainer/PauseMenu/Resume" to="." method="unpause"]
+[connection signal="pressed" from="Anchor/MarginContainer/PauseMenu/Quit" to="." method="quit"]
+[connection signal="pressed" from="Anchor/MarginContainer/LevelBeat/HBoxContainer/Menu" to="." method="quit"]
+[connection signal="pressed" from="Anchor/MarginContainer/LevelBeat/HBoxContainer/Next" to="." method="next"]

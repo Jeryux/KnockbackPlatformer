@@ -21,7 +21,7 @@ var ammo
 var reloading = false
 var can_shoot = true
 var dead = false
-var camera_shift = 0.15
+var camera_shift = 0.35
 
 var bullet_scene = preload("res://player/bullet/bullet.tscn")
 @export var respawn_point : Node
@@ -79,9 +79,9 @@ func _input(event):
 		reload()
 	if Input.is_action_pressed("control"):
 		var viewport_size = Vector2(get_viewport().get_visible_rect().size) / Vector2(2,2)
-		if get_viewport().get_mouse_position().x > 0 or get_viewport().get_mouse_position().x < viewport_size.x * 2:
+		if get_viewport().get_mouse_position().x > 0 and get_viewport().get_mouse_position().x < viewport_size.x * 2:
 			camera.position.x = (get_viewport().get_mouse_position().x - viewport_size.x) * camera_shift
-		if get_viewport().get_mouse_position().y > 0 or get_viewport().get_mouse_position().y < viewport_size.y * 2:
+		if get_viewport().get_mouse_position().y > 0 and get_viewport().get_mouse_position().y < viewport_size.y * 2:
 			camera.position.y = (get_viewport().get_mouse_position().y - viewport_size.y) * camera_shift
 	elif Input.is_action_just_released("control"):
 		camera.set_position(Vector2(0,0))
@@ -128,6 +128,7 @@ func die():
 
 func respawn(location : Vector2):
 	global_position = location
+	camera.set_position(Vector2(0,0))
 	collision.set_deferred("disabled", false)
 	can_shoot = true
 	velocity = Vector2.ZERO
@@ -180,6 +181,7 @@ func area_interact(area):
 		respawn_point = area
 		respawn_point.active(true)
 		respawn_point.camera_zoom = camera.zoom
+		respawn_point.play_set()
 
 
 func make_vulnerable():

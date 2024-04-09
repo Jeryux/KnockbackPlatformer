@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://du82frgirjd6j"]
+
+[ext_resource type="Script" path="res://specials/next_level_spot.gd" id="1_p38hr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0jn0"]
+
+[sub_resource type="Gradient" id="Gradient_g45p6"]
+offsets = PackedFloat32Array(0.217742, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_omsfo"]
+gradient = SubResource("Gradient_g45p6")
+
+[sub_resource type="Curve" id="Curve_y6562"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.598684, 0.89011), 0.0, 0.0, 0, 0, Vector2(1, 0.813187), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_jnchw"]
+curve = SubResource("Curve_y6562")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_spdln"]
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(5, 1, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+angle_max = 360.0
+direction = Vector3(0, -1, 0)
+spread = 60.0
+initial_velocity_min = 15.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, -5, 0)
+scale_curve = SubResource("CurveTexture_jnchw")
+color = Color(1, 1, 0, 1)
+color_ramp = SubResource("GradientTexture1D_omsfo")
+
+[node name="next_level_spot" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_p38hr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_r0jn0")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+process_material = SubResource("ParticleProcessMaterial_spdln")
+
+[connection signal="body_entered" from="." to="." method="respond"]

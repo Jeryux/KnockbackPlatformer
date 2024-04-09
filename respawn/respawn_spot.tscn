@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://das4lngpt8nab"]
+[gd_scene load_steps=13 format=3 uid="uid://das4lngpt8nab"]
 
 [ext_resource type="Script" path="res://respawn/respawn_spot.gd" id="1_dsxwv"]
 
@@ -19,6 +19,47 @@ emission_box_extents = Vector3(8, 8, 1)
 gravity = Vector3(0, -6, 0)
 color_ramp = SubResource("GradientTexture1D_sjpfi")
 
+[sub_resource type="Curve" id="Curve_kv0yr"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.289474, 0.373626), 0.0, 0.0, 0, 0, Vector2(0.763158, 0.758242), 0.0, 0.0, 0, 0, Vector2(0.980263, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_bundj"]
+curve = SubResource("Curve_kv0yr")
+
+[sub_resource type="Gradient" id="Gradient_2syhf"]
+offsets = PackedFloat32Array(0, 0.508065, 1)
+colors = PackedColorArray(0, 0.964706, 0, 1, 0.418635, 0.197825, 0.583229, 1, 0.188235, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8io1d"]
+gradient = SubResource("Gradient_2syhf")
+
+[sub_resource type="Curve" id="Curve_nlm8i"]
+_data = [Vector2(0, 0.637363), 0.0, 0.0, 0, 0, Vector2(0.703947, 0.373626), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_iv0ol"]
+curve = SubResource("Curve_nlm8i")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qbeib"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -10, 0)
+emission_shape = 1
+emission_sphere_radius = 3.0
+angle_max = 360.0
+direction = Vector3(0, 0, 0)
+spread = 180.0
+initial_velocity_min = 30.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -20.0
+linear_accel_max = -20.0
+scale_min = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_iv0ol")
+color_ramp = SubResource("GradientTexture1D_8io1d")
+alpha_curve = SubResource("CurveTexture_bundj")
+turbulence_noise_strength = 6.0
+
 [node name="RespawnSpot" type="Area2D" groups=["RespawnPoint"]]
 collision_layer = 8
 collision_mask = 0
@@ -34,5 +75,12 @@ amount = 7
 amount_ratio = 0.5
 process_material = SubResource("ParticleProcessMaterial_kgien")
 lifetime = 2.4
+
+[node name="SetEffect" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 14
+process_material = SubResource("ParticleProcessMaterial_qbeib")
+one_shot = true
+explosiveness = 1.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
