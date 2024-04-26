@@ -51,6 +51,12 @@ layout_mode = 2
 theme_override_constants/separation = 100
 alignment = 1
 
+[node name="Button" type="Button" parent="MarginContainer/LevelSelect"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 45
+text = "BACK"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/LevelSelect"]
 layout_mode = 2
 theme_override_constants/separation = 200
@@ -70,11 +76,22 @@ level_scene_path = "res://levels/level_2.tscn"
 layout_mode = 2
 level_name = "Level 3"
 
-[node name="Button" type="Button" parent="MarginContainer/LevelSelect"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/LevelSelect"]
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 45
-text = "BACK"
+theme_override_constants/separation = 200
+alignment = 1
+
+[node name="SelectLevel" parent="MarginContainer/LevelSelect/HBoxContainer2" instance=ExtResource("2_mxmkh")]
+layout_mode = 2
+level_name = "Level 4"
+
+[node name="SelectLevel2" parent="MarginContainer/LevelSelect/HBoxContainer2" instance=ExtResource("2_mxmkh")]
+layout_mode = 2
+level_name = "Level 5"
+
+[node name="SelectLevel3" parent="MarginContainer/LevelSelect/HBoxContainer2" instance=ExtResource("2_mxmkh")]
+layout_mode = 2
+level_name = "Level 6"
 
 [connection signal="pressed" from="MarginContainer/MainControls/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MarginContainer/MainControls/Quit" to="." method="_on_quit_pressed"]

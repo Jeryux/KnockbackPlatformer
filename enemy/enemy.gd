@@ -26,16 +26,18 @@ func _physics_process(_delta):
 	if dead:
 		return
 	if is_on_wall():
-		left_cast.enabled = true
-		right_cast.enabled = true
-		left_cast.force_raycast_update()
-		right_cast.force_raycast_update()
+		check_sides()
 		if left_cast.is_colliding() or right_cast.is_colliding():
 			going_right = not right_cast.is_colliding()
 			movement_manager.set_move_direction(1 if going_right else -1)
 			sprite.flip_h = going_right
 	move_and_slide()
 
+func check_sides():
+	left_cast.enabled = true
+	right_cast.enabled = true
+	left_cast.force_raycast_update()
+	right_cast.force_raycast_update()
 func die():
 	detector.set_deferred("monitoring", false)
 	dead = true

@@ -39,7 +39,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(100, 100)
 
-[node name="MarginContainer" type="MarginContainer" parent="Anchor"]
+[node name="PauseContainer" type="MarginContainer" parent="Anchor"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -52,21 +52,55 @@ offset_bottom = 115.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Anchor/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Anchor/PauseContainer"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Resume" type="Button" parent="Anchor/MarginContainer/VBoxContainer"]
+[node name="Resume" type="Button" parent="Anchor/PauseContainer/VBoxContainer"]
 custom_minimum_size = Vector2(250, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
 text = "Resume"
 
-[node name="Quit" type="Button" parent="Anchor/MarginContainer/VBoxContainer"]
+[node name="Quit" type="Button" parent="Anchor/PauseContainer/VBoxContainer"]
 custom_minimum_size = Vector2(250, 100)
 layout_mode = 2
 theme_override_font_sizes/font_size = 45
 text = "Quit"
 
-[connection signal="pressed" from="Anchor/MarginContainer/VBoxContainer/Resume" to="." method="unpause"]
-[connection signal="pressed" from="Anchor/MarginContainer/VBoxContainer/Quit" to="." method="quit"]
+[node name="LevelBeatContainer" type="MarginContainer" parent="Anchor"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -115.0
+offset_right = 125.0
+offset_bottom = 115.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Anchor/LevelBeatContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Next" type="Button" parent="Anchor/LevelBeatContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Next level
+"
+
+[node name="Menu" type="Button" parent="Anchor/LevelBeatContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 45
+text = "Main menu
+"
+
+[connection signal="pressed" from="Anchor/PauseContainer/VBoxContainer/Resume" to="." method="unpause"]
+[connection signal="pressed" from="Anchor/PauseContainer/VBoxContainer/Quit" to="." method="quit"]
+[connection signal="pressed" from="Anchor/LevelBeatContainer/VBoxContainer/Next" to="." method="next_level"]
+[connection signal="pressed" from="Anchor/LevelBeatContainer/VBoxContainer/Menu" to="." method="quit"]

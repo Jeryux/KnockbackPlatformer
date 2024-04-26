@@ -59,6 +59,7 @@ collision_mask = 17
 script = ExtResource("1_unjuo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 0.0196078, 0.984314, 1)
 sprite_frames = SubResource("SpriteFrames_7t1d3")
 animation = &"walk"
 autoplay = "walk"

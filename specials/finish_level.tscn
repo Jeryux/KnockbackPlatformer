@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://c5igv275dgo8i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rhlnx"]
+size = Vector2(14, 18)
+
+[sub_resource type="Gradient" id="Gradient_3hlks"]
+offsets = PackedFloat32Array(0.112903, 0.233871, 0.362903, 0.508065, 1)
+colors = PackedColorArray(0.227451, 0.678431, 0.839216, 1, 0.8, 0.270588, 0, 1, 0.89, 0.741518, 0.2047, 1, 0.227451, 0.678431, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sjpfi"]
+gradient = SubResource("Gradient_3hlks")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_va4ot"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(8, 8, 1)
+gravity = Vector3(0, -6, 0)
+color_ramp = SubResource("GradientTexture1D_sjpfi")
+turbulence_enabled = true
+turbulence_noise_scale = 6.0
+turbulence_noise_speed = Vector3(5, 0, 0)
+turbulence_influence_min = 0.03
+turbulence_influence_max = 0.05
+
+[node name="FinishLevel" type="Area2D" groups=["NextLevel"]]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_rhlnx")
+
+[node name="IdleEffect" type="GPUParticles2D" parent="."]
+position = Vector2(0, -10)
+amount = 7
+amount_ratio = 0.5
+process_material = SubResource("ParticleProcessMaterial_va4ot")
+lifetime = 2.4
