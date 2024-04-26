@@ -15,3 +15,6 @@ func give_respawn_pos():
 func active(state : bool):
 	$SelectedEffect.restart()
 	$SelectedEffect.emitting = state
+
+func play_set():
+	$SetEffect.emitting = true
