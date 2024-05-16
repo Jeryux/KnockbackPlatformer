@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://4ak1wio7gal3"]
 
-[ext_resource type="Script" path="res://levels/level_2.gd" id="1_6h8l1"]
+[ext_resource type="Script" path="res://levels/level_entity.gd" id="1_ukfwd"]
 [ext_resource type="TileSet" uid="uid://b5yxflgevsi4n" path="res://levels/levels_tileset.tres" id="1_y10k0"]
 [ext_resource type="PackedScene" uid="uid://das4lngpt8nab" path="res://respawn/respawn_spot.tscn" id="2_0ch8b"]
 [ext_resource type="PackedScene" uid="uid://dktr2rmnyybd3" path="res://zoom_changer/zoom_changer.tscn" id="3_grupa"]
@@ -11,7 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://dgnxy1add5uf5" path="res://enemy/enemy.tscn" id="6_w46hc"]
 
 [node name="Level2" type="Node"]
-script = ExtResource("1_6h8l1")
+script = ExtResource("1_ukfwd")
+next_level_path = "res://levels/level_3.tscn"
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_y10k0")

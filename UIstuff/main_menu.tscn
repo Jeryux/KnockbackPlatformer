@@ -75,6 +75,7 @@ level_scene_path = "res://levels/level_2.tscn"
 [node name="SelectLevel3" parent="MarginContainer/LevelSelect/HBoxContainer" instance=ExtResource("2_mxmkh")]
 layout_mode = 2
 level_name = "Level 3"
+level_scene_path = "res://levels/level_3.tscn"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/LevelSelect"]
 layout_mode = 2
